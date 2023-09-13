@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Spatie\Permission\Contracts\Role;
+use Spatie\Permission\Models\Role;
 
 
 
@@ -50,7 +50,7 @@ class UserController extends Controller
             return response()->json(['message' => 'Logged in', 'user' => $user->name, 'auth_token' => $token], 200);
 
         }
-        return response()->json(['message' => 'User or password'], 401);
+        return response()->json(['message' => 'User or password incorrect'], 401);
     }
 
     public function register(Request $request){
@@ -84,6 +84,52 @@ class UserController extends Controller
         return response()->json(['message' => 'register completed', 'name' => $user->name, 'email' => $user->email], 201);
 
 
+    }
+
+    private function getUser($id){
+        return User::findorfail($id);
+    }
+
+    public function update(Request $request, $id){
+        $user = $this->getUser($id);
+        $newName = $request->input('name');
+
+        if($user->id !== Auth::user()->id)
+        {
+            return response()->json(['message' => 'You do not have permission to update this user.'],403);
+
+        }if (empty($newName))
+        {
+            return response()->json(['error' => 'The name field is required.'], 422);
+        }if ($newName !== $user->name)
+        {
+            $validator = Validator::make(['name' => $newName], [
+                'name' => 'required|max:55|unique:users,name,'  ,
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()->first()], 422);
+            }
+
+            $user->name = $newName;
+            $user->save();
+        } else
+        {
+            return response()->json(['error' => 'The provided name is the same as the current one. No update performed.'], 422);
+        }
+
+        return response()->json(['message'=> 'Name update', 'name'=> $user->name], 200);
+    }
+
+
+
+    public function logout(){
+        $user = Auth::user();
+
+       $token = $user->token();
+       $token->revoke();
+
+       return response()->json([ 'message' => 'Successfully logged out'], 200);
     }
 
 

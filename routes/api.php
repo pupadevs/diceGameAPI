@@ -21,10 +21,11 @@ Route::post('players',[UserController::class,'register'])->name('user.register')
 
 Route::middleware('auth:api')->group(function(){
     //Player
+    Route::post('logout',[UserController::class, 'logout'])->middleware('role:admin|player')->name('user.logout'); //logout
 
     Route::get('/players',[UserController::class,'index'])->middleware('role:admin')->name('players.index'); //Player list
 
-    Route::patch('/players/{id}',[UserController::class, 'update'])->middleware('role:player')->name('playres.update'); //Update name
+    Route::put('/players/{id}',[UserController::class, 'update'])->name('playres.update'); //Update name
 
     Route::get('player/ranking',[UserController::class,'allPlayerRate'])->middleware('role:admin')->name('ranking.index');//Rank all player
 
@@ -40,5 +41,4 @@ Route::middleware('auth:api')->group(function(){
 
     Route::delete('/players/íd}/games',[GameController::class, 'destroy'])->middleware('role:player')->name('games.destroy'); //game destroy
 
-    Route::post('logout',[UserController::class, 'logout'])->middleware('role:admin|player')->name('user.logout'); //logout
 });
