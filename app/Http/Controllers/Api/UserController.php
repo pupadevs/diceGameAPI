@@ -53,7 +53,38 @@ class UserController extends Controller
         return response()->json(['message' => 'User or password'], 401);
     }
 
-   
+    public function register(Request $request){
+
+       $rules = [
+            'name' => 'nullable',
+            'email' => 'required|email',
+            'password' => 'required|min:8',
+        ];
+
+        $messages = [
+            'email.required' => 'The email field is required.',
+            'password.min' => 'The length is less than 8.',
+            'password.required' => 'The password field is required.',
+        ];
+
+
+     $validator = Validator::make($request->all(), $rules, $messages);
+
+        if($validator->fails()){
+            return response()->json(['message' => $validator->errors()], 422);
+        }
+        $name = $request->filled('name') ? $request->name : 'Anonymous';
+        $user = User::create([
+            'name' => $name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+           ])->assignRole('player');
+
+
+        return response()->json(['message' => 'register completed', 'name' => $user->name, 'email' => $user->email], 201);
+
+
+    }
 
 
 
