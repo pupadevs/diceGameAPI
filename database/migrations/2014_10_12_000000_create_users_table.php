@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->decimal('succes_rate',5,2)->nullable();
-            $table->integer('rank')->nullable();
+            $table->decimal('succes_rate',5,2)->nullable()->default(0);
+            $table->integer('rank')->nullable()->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

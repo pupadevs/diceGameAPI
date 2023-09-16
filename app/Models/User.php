@@ -9,6 +9,9 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Laravel\Passport\HasApiTokens;
 use App\Models\Game;
+use Spatie\Permission\Contracts\Role;
+
+
 
 
 class User extends Authenticatable
@@ -50,5 +53,13 @@ class User extends Authenticatable
     public function games(){
         return $this->hasMany(Game::class);
     }
-    
+
+    public function calculateSuccessRate(){
+            $playedGames = $this->games()->count(); // Obtener el número de juegos del usuario actual
+            $winGames = $this->games()->where('win', true)->count(); // Obtener el número de juegos ganados
+
+            return $playedGames > 0 ? ($winGames / $playedGames) * 100 : 0;
+    }
+   
+
 }

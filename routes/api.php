@@ -29,17 +29,17 @@ Route::middleware('auth:api')->group(function(){
 
     Route::put('/players/{id}',[UserController::class, 'update'])->name('playres.update'); //Update name
 
-    Route::get('player/ranking',[UserController::class,'allPlayerRate'])->middleware('role:admin')->name('ranking.index');//Rank all player
+    Route::get('players/ranking',[UserController::class,'allGamesRate'])->middleware('role:admin')->name('ranking.index');//Rank all player
 
-    Route::get('/players/ranking/winner',[])->middleware('role:admin')->name('rankin.winner'); //Highest succes rate
+    Route::get('/players/ranking/winner',[UserController::class, 'highestSuccessRate'])->middleware('role:admin')->name('rankin.winner'); //Highest succes rate
 
-    Route::get('/players/ranking/loser',[])->middleware('role:admin')->name('ranking.loser'); //lowest succes rate
+    Route::get('/players/ranking/loser',[UserController::class, 'lowestSuccessRate'])->middleware('role:admin')->name('ranking.loser'); //lowest succes rate
 
     //Game
 
     Route::get('/players/{id}/games',[GameController::class, 'index'])->middleware('role:player')->name('games.index'); // Games list
 
-    Route::post('/players/{id}/games',[GameController::class, 'throwDice'])->middleware('role:player')->name('games.throw'); //play game
+    Route::post('/players/{id}/games',[GameController::class, 'throwDice'])->name('games.throw'); //play game
 
     Route::delete('/players/íd}/games',[GameController::class, 'destroy'])->middleware('role:player')->name('games.destroy'); //game destroy
 
