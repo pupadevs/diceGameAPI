@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Validation\Rules\Exists;
 use Spatie\Permission\Models\Role;
 
 
@@ -113,14 +114,13 @@ public function test_a_user_can_update_nickname_with_valid_data()
     }
     $player->assignRole('player');
 
-    $updateNAme = 'N33w Name';
+    $updateNAme = 'pedro juan';
 
    $response = $this->actingAs($player, 'api')->json('PATCH', route('playres.update', ['id' => $player->id]), ['name' => $updateNAme], ['auth_token' =>  $token]);
 
     $this->assertDatabaseHas('users', ['id' => $player->id, 'name' => $updateNAme]);
     $response->assertStatus(200);
 }
-
 
 
 
