@@ -24,4 +24,14 @@ class UserControllerTest extends TestCase
 
         $register->assertJson(['message' => 'User registered successfully'])->assertStatus(201);
     }
+    public function test_register_for_incorrect_dates(){
+
+        $badEmailAndPass = $this->postJson(route('user.register'),[
+            "email" => "eruerf.@vssv",
+            "password" => "a"
+        ]);
+
+        $badEmailAndPass->assertStatus(422);
+
+    }
 }
