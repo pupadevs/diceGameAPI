@@ -5,6 +5,12 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Models\User;
+use Illuminate\Support\Facades\Artisan;
+
+
+
+
 
 class UserControllerTest extends TestCase
 {
@@ -27,11 +33,26 @@ class UserControllerTest extends TestCase
     public function test_register_for_incorrect_dates(){
 
         $badEmailAndPass = $this->postJson(route('user.register'),[
+            'name' => 'jhh',
             "email" => "eruerf.@vssv",
-            "password" => "a"
+
         ]);
 
         $badEmailAndPass->assertStatus(422);
 
     }
+
+    public function test_existing_email(){
+        $existingEmail = $this->postJson(route('user.register'),[
+            'name' => 'jhh',
+            'email' => 'prueba232@gmail.com',
+            'password' =>'123456789'
+        ])->assertStatus(422);
+
+    }
+  
+
+
+
+
 }
