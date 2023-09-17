@@ -86,6 +86,16 @@ class UserControllerTest extends TestCase
     }
 
 
+public function test_login_invalid_data(){
+    $badLogin = $this->postJson(route('user.login'), [
+        'email' => 'bad@example.com',
+        'password' => '12345678'
+    ]);
+
+    $badLogin->assertJson(['message' =>'User or password incorrect'])->assertStatus(401);
+
+}
+
 
 
 }
