@@ -50,7 +50,18 @@ class UserControllerTest extends TestCase
         ])->assertStatus(422);
 
     }
-  
+    public function test_existing_name(){
+        $existingEmail = $this->postJson(route('user.register'),[
+            'name' => 'pupa',
+            'email' => 'prueba232@gmail.com',
+            'password' =>'123456789'
+        ])->assertStatus(422);
+
+    }
+
+
+
+   
 
 
 
