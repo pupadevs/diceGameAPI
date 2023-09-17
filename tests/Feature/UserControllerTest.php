@@ -7,6 +7,9 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Support\Facades\Artisan;
+use Spatie\Permission\Models\Role;
+
+
 
 
 
@@ -14,6 +17,7 @@ use Illuminate\Support\Facades\Artisan;
 
 class UserControllerTest extends TestCase
 {
+
     /**
      * A basic feature test example.
      */
@@ -95,6 +99,31 @@ public function test_login_invalid_data(){
     $badLogin->assertJson(['message' =>'User or password incorrect'])->assertStatus(401);
 
 }
+
+
+
+public function test_a_user_can_update_nickname_with_valid_data()
+{
+
+    $player = User::factory()->create();
+    $token = $player->createToken('auth_token')->accessToken;
+
+    if (!Role::where('name', 'player')->exists()) {
+        Role::create(['name' => 'player']);
+    }
+    $player->assignRole('player');
+
+    $updateNAme = 'N33w Name';
+
+   $response = $this->actingAs($player, 'api')->json('PATCH', route('playres.update', ['id' => $player->id]), ['name' => $updateNAme], ['auth_token' =>  $token]);
+
+    $this->assertDatabaseHas('users', ['id' => $player->id, 'name' => $updateNAme]);
+    $response->assertStatus(200);
+}
+
+
+
+
 
 
 
