@@ -60,8 +60,30 @@ class UserControllerTest extends TestCase
     }
 
 
+    public function test_login()
+    {
 
-   
+        $login = $this->postJson(route('user.login'), [
+            'email' => 'test@example.com',
+            'password' => '12345678'
+        ]);
+
+        $login->assertJsonStructure([
+            'message',
+            'user',
+            'auth_token'
+        ])->assertStatus(200);
+
+        // Verificando message
+        $login->assertJson([
+            'message' => 'Logged in'
+        ]);
+
+        // Verificando token
+        $login->assertJson([
+            'auth_token' => !empty($login->json('auth_token'))
+        ]);
+    }
 
 
 
