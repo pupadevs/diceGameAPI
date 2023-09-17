@@ -109,19 +109,32 @@ public function test_a_user_can_update_nickname_with_valid_data()
     $player = User::factory()->create();
     $token = $player->createToken('auth_token')->accessToken;
 
-    if (!Role::where('name', 'player')->exists()) {
-        Role::create(['name' => 'player']);
-    }
+
     $player->assignRole('player');
 
-    $updateNAme = 'pedro juan';
+    $updateNAme = 'pedro juasn';
 
    $response = $this->actingAs($player, 'api')->json('PATCH', route('playres.update', ['id' => $player->id]), ['name' => $updateNAme], ['auth_token' =>  $token]);
 
     $this->assertDatabaseHas('users', ['id' => $player->id, 'name' => $updateNAme]);
     $response->assertStatus(200);
 }
+public function test_a_user_can_update_with_same_name()
+{
 
+    $player = User::factory()->create(['name' => 'existente nombre']);
+
+    $token = $player->createToken('auth_token')->accessToken;
+  
+
+
+    $updateNAme = 'existente nombre';
+
+   $response = $this->actingAs($player, 'api')->json('PATCH', route('playres.update', ['id' => $player->id]), ['name' => $updateNAme], ['auth_token' =>  $token]);
+
+
+    $response->assertStatus(422)->assertJson(['error' => 'The provided name is the same as the current one. No update performed.']);
+}
 
 
 
