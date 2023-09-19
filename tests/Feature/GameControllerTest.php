@@ -59,23 +59,13 @@ class GameControllerTest extends TestCase
     }
     public function test_get_all_games_specific_player()
     {
-        $player = User::find(2)->assignRole('player');
-         $token = $player->createToken('auth_token')->accessToken;
-       // $games = $player->games()->select('dice1', 'dice2', 'win', 'id')->get();
-        $response = $this->actingAs($player, 'api')->getJson(route('games.index', $player->id),['Authorization' => 'Bearer' .$token]);
+        $player = User::factory()->create()->assignRole('player');
+
+        Game::factory(5)->create(['user_id' => $player->id]);
+        $token = $player->createToken('auth_token')->accessToken;
+        $response = $this->actingAs($player, 'api')->getJson(route('games.index', $player->id), ['Authorization' => 'Bearer' . $token]);
         $response->assertStatus(200);
     }
-   /*  public function test_get_all_empty_games_specific_player()
-    {
-        $player = User::factory()->create()->assignRole('player');
-        $token = $player->createToken('auth_token')->accessToken;
-
-        $response = $this->actingAs($player, 'api')->getJson(route('games.index', $player->id), ['Authorization' => 'Bearer ' . $token]);
-        $response->assertStatus(404);
-
-        // Verificar que no haya juegos
-        $response->assertJsonCount(0, 'Games');
-    } */
 
 
     public function test_get_all_games_specific_player_invalid_user()
@@ -87,35 +77,30 @@ class GameControllerTest extends TestCase
         $response->assertStatus(401)->assertJson(['message' => 'Unathorized user']);
     }
 
-    public function test_delete_all_games(){
-        $player= User::factory()->create()->assignRole('player');
+    public function test_delete_all_games()
+    {
+        $player = User::factory()->create()->assignRole('player');
 
         Game::factory(5)->create(['user_id' => $player->id]);
 
         $response = $this->actingAs($player, 'api')->deleteJson(route('games.destroy', $player->id));
-        $response->assertStatus(200);
-        $this->assertEquals(0,$player->games()->count());
-
+        $response->assertStatus(200)->assertJson(['message' => ' Deleted all Games']);
+        $this->assertEquals(0, $player->games()->count());
     }
-    public function test_can_delete_all_games_another_user(){
-        $player= User::factory()->create()->assignRole('player');
+    public function test_can_delete_all_games_another_user()
+    {
+        $player = User::factory()->create()->assignRole('player');
 
         Game::factory(5)->create(['user_id' => $player->id]);
 
-        $response = $this->actingAs($player, 'api')->deleteJson(route('games.destroy', $player->id+2));
+        $response = $this->actingAs($player, 'api')->deleteJson(route('games.destroy', $player->id + 2));
         $response->assertStatus(401);
-        $this->assertEquals(5,$player->games()->count());
-
-
+        $this->assertEquals(5, $player->games()->count());
     }
-    public function test_delete_all_games_empty(){
-        $player= User::factory()->create()->assignRole('player');
-
-
-
+    public function test_delete_all_games_empty()
+    {
+        $player = User::factory()->create()->assignRole('player');
         $response = $this->actingAs($player, 'api')->deleteJson(route('games.destroy', $player->id));
         $response->assertStatus(204);
-
-
     }
 }

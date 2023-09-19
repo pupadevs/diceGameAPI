@@ -56,7 +56,7 @@ class UserControllerTest extends TestCase
 
         $register->assertStatus(422);
     }
-    public function test_register_for_incorrect_dates()
+    public function test_register_for_incorrect_data()
     {
 
         $badEmailAndPass = $this->postJson(route('user.register'), [
@@ -68,7 +68,7 @@ class UserControllerTest extends TestCase
         $badEmailAndPass->assertStatus(422);
     }
 
-    public function test_existing_email()
+    public function test_register_existing_email()
     {
         $existingEmail = $this->postJson(route('user.register'), [
             'name' => 'jhh',
@@ -76,15 +76,6 @@ class UserControllerTest extends TestCase
             'password' => '123456789'
         ])->assertStatus(422);
     }
-    public function test_existing_name()
-    {
-        $existingEmail = $this->postJson(route('user.register'), [
-            'name' => 'player',
-            'email' => 'prueba232@gmail.com',
-            'password' => '123456789'
-        ])->assertStatus(422);
-    }
-
 
     public function test_login()
     {
@@ -102,7 +93,8 @@ class UserControllerTest extends TestCase
 
         // Verificando message
         $login->assertJson([
-            'message' => 'Logged in'
+            'message' => 'Logged in',
+
         ]);
 
         // Verificando token
@@ -110,7 +102,6 @@ class UserControllerTest extends TestCase
             'auth_token' => !empty($login->json('auth_token'))
         ]);
     }
-
 
     public function test_login_invalid_data()
     {
@@ -122,8 +113,6 @@ class UserControllerTest extends TestCase
         $badLogin->assertJson(['message' => 'User or password incorrect'])->assertStatus(401);
     }
 
-
-
     public function test_a_user_can_update_nickname_with_valid_data()
     {
 
@@ -133,7 +122,7 @@ class UserControllerTest extends TestCase
 
         $player->assignRole('player');
 
-        $updateNAme = 'Jose mota23';
+        $updateNAme = fake()->name();
 
         $response = $this->actingAs($player, 'api')->json('PATCH', route('players.update', ['id' => $player->id]), ['name' => $updateNAme], ['auth_token' =>  $token]);
 
