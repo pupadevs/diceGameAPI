@@ -2,10 +2,9 @@
 <p align="center"><img src="https://svgsilh.com/svg/152068-e91e63.svg" width="300" alt="dados"></a></p>
 
 <p align="center">
-<a href="https://github.com/elpupas"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+<a href="https://www.linkedin.com/in/peterson-andres-sena-arias-215944221/"><img src="https://www.svgrepo.com/show/81143/linkedin.svg" width ="30" alt="linkdln"></a>
+
+
 </p>
 
 
