@@ -26,7 +26,7 @@ class UserController extends Controller
     public function index()
     {
 
-        $players = User::orderby('succes_rate', 'desc')->get();
+        $players = User::orderby('succes_rate', 'desc')->select('id', 'name', 'succes_rate', 'rank')->get();
         $this->rank($players);
 
         return response()->json(['player' => [$players]], 200);

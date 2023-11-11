@@ -79,6 +79,8 @@ class GameController extends Controller
 
             if ($user->games()->count() > 0) {
                 $user->games()->delete();
+                $user->succes_rate = 0;
+                $user->save();
                 return response()->json(['message' => ' Delete All Game'], 200);
             } else {
                 return response()->json(['message' => 'You dont have games for deleted'], 204);
