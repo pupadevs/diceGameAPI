@@ -41,6 +41,6 @@ Route::middleware('auth:api')->group(function(){
 
     Route::post('/players/{id}/games',[GameController::class, 'throwDice'])->name('games.throw'); //play game
 
-    Route::delete('/players/íd}/games',[GameController::class, 'destroy'])->middleware('role:player')->name('games.destroy'); //game destroy
+    Route::delete('/players/{id}/games',[GameController::class, 'destroy'])->middleware('role:player')->name('games.destroy'); //game destroy
 
 });
