@@ -1,0 +1,41 @@
+# fly.toml app configuration file generated for dicegameapi on 2024-05-11T18:51:39+02:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'dicegameapi'
+primary_region = 'mad'
+console_command = 'php /var/www/html/artisan tinker'
+
+[build]
+  [build.args]
+    NODE_VERSION = '18'
+    PHP_VERSION = '8.2'
+
+[env]
+  APP_ENV = 'production'
+  LOG_CHANNEL = 'stderr'
+  LOG_LEVEL = 'info'
+  LOG_STDERR_FORMATTER = 'Monolog\Formatter\JsonFormatter'
+  SESSION_DRIVER = 'cookie'
+  SESSION_SECURE_COOKIE = 'true'
+  DB_CONNECTION = "mysql"
+  DB_HOST = "mysqldice.internal"
+  DB_DATABASE= "dices"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
+
+  [deploy]
+  release_command = "php /var/www/html/artisan migrate --force && php /var/www/html/artisan passport:install"
+
