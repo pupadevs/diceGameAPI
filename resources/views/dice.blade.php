@@ -11,11 +11,10 @@
 <body class="bg-gray-100">
     <div class="min-h-screen flex flex-col justify-center items-center px-4">
         <!-- Logo SVG de dados -->
-        <img src="https://svgsilh.com/svg/152068-e91e63.svg" class="w-12 h-12 md:w-30 md:h-16 text-blue-500 mb-4"  viewBox="0 0 20 20" fill="currentColor" width="300" alt="dados">
+        <img src="https://svgsilh.com/svg/152068-e91e63.svg" class="w-16 h-16 md:w-22 h-22 md:h-22 lg:max-w-lg text-blue-500 mb-4 object-contain" viewBox="0 0 20 20" fill="currentColor" alt="dados">
 
-        <h1 class="text-2xl md:text-4xl font-bold mb-4 text-center">Bienvenido a la API de Dados</h1>
+        <h1 class="text-2xl md:text-4xl font-bold mb-4 text-center">Bienvenido a la API de Dados v1.0.0</h1>
         <p class="text-base md:text-lg text-gray-700 mb-8 text-center">Esta API proporciona endpoints para simular el lanzamiento de dados y obtener resultados aleatorios.</p>
-        <a href="{{url('api/documentation')}}" class="text-base md:text-2xl sm:text-3xl bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-md shadow-md transition duration-300 ease-in-out">Ver Documentación</a>
         
         <!-- Botones para abrir modales -->
         <div class="mt-4 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
@@ -70,7 +69,7 @@
 
         <!-- Iconos de GitHub y LinkedIn -->
         <div class="mt-4 flex space-x-4">
-            <a href="https://github.com/pupadevs" target="_blank" class="text-gray-700 hover:text-gray-900"><i class="fab fa-github text-2xl md:text-3xl"></i></a>
+            <a href="https://github.com/pupadevs/diceGameAPI" target="_blank" class="text-gray-700 hover:text-gray-900"><i class="fab fa-github text-2xl md:text-3xl"></i></a>
             <a href="https://www.linkedin.com/in/peterson-sena" target="_blank" class="text-gray-700 hover:text-gray-900"><i class="fab fa-linkedin text-2xl md:text-3xl"></i></a>
         </div>
     </div>
