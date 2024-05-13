@@ -23,6 +23,7 @@ use Spatie\Permission\Models\Role;
 class UserController extends Controller
 {
 
+
     public function index()
     {
 
@@ -31,6 +32,7 @@ class UserController extends Controller
 
         return response()->json(['player' => [$players]], 200);
     }
+
 
     public function login(Request $request)
     {
@@ -59,7 +61,7 @@ class UserController extends Controller
              /** @var \App\Models\User $user **/
             $token = $user->createToken('auth_token')->accessToken;
 
-            return response()->json(['message' => 'Logged in', 'user' => $user->name, 'auth_token' => $token], 200);
+            return response()->json(['message' => 'Logged in', 'user' => $user->name, 'id' => $user->id, 'auth_token' => $token], 200);
         }
         return response()->json(['message' => 'User or password incorrect'], 401);
     }
