@@ -27,7 +27,7 @@ Route::middleware('auth:api')->group(function(){
 
     Route::get('/players',[UserController::class,'index'])->middleware('role:admin')->name('players.index'); //Player list
 
-    Route::put('/players/{id}',[UserController::class, 'update'])->name('playres.update'); //Update name
+    Route::put('/players/{id}',[UserController::class, 'update'])->name('players.update'); //Update name
 
     Route::get('players/ranking',[UserController::class,'allGamesRate'])->middleware('role:admin')->name('ranking.index');//Rank all player
 
@@ -39,7 +39,7 @@ Route::middleware('auth:api')->group(function(){
 
     Route::get('/players/{id}/games',[GameController::class, 'index'])->middleware('role:player')->name('games.index'); // Games list
 
-    Route::post('/players/{id}/games',[GameController::class, 'throwDice'])->name('games.throw'); //play game
+    Route::post('/players/{id}/games',[GameController::class, 'throwDice'])->middleware('role:player')->name('games.throw'); //play game
 
     Route::delete('/players/{id}/games',[GameController::class, 'destroy'])->middleware('role:player')->name('games.destroy'); //game destroy
 
