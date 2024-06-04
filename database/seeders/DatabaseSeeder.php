@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
            'name' => 'Admin',
            'email' => 'admin@example.com',
            'email_verified_at' => now(),
-           'password' => env('ADMIN_PASSWORD', '12345678'), // password
+           'password' => bcrypt(12345678), // password
            'remember_token' => Str::random(10),
 
         ])->assignRole('admin');

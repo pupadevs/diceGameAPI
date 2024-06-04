@@ -8,10 +8,10 @@
     <!-- Font Awesome CDN para iconos -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100">
+<body class="bg-blue-100">
     <div class="min-h-screen flex flex-col justify-center items-center px-4">
         <!-- Logo SVG de dados -->
-        <img src="https://svgsilh.com/svg/152068-e91e63.svg" class="w-16 h-16 md:w-22 h-22 md:h-22 lg:max-w-lg text-blue-500 mb-4 object-contain" viewBox="0 0 20 20" fill="currentColor" alt="dados">
+        <img src="https://svgsilh.com/svg/152068-e91e63.svg" class="w-17 h-18 sm:w-16 sm:h-16 md:w-17  md:h-18 lg:max-w-lg text-blue-500 mb-4 object-contain" viewBox="0 0 20 20" fill="currentColor" alt="dados">
 
         <h1 class="text-2xl md:text-4xl font-bold mb-4 text-center">Bienvenido a la API de Dados v1.0.0</h1>
         <p class="text-base md:text-lg text-gray-700 mb-8 text-center">Esta API proporciona endpoints para simular el lanzamiento de dados y obtener resultados aleatorios.</p>
